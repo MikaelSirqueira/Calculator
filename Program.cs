@@ -1,4 +1,5 @@
 ﻿// See https://aka.ms/new-console-template for more information
+
 Menu();
 
 
@@ -21,7 +22,7 @@ static void Menu(){
         case 2: Subtracao(); break;
         case 3: Divisao(); break;
         case 4: Multiplicacao(); break;
-        case 5: System.Environment.Exit(0); break;
+        case 0: System.Environment.Exit(0); break;
         default: Menu(); break;
     }
 }
@@ -29,11 +30,10 @@ static void Menu(){
 static void Soma() {
     Console.Clear();
     Console.WriteLine("Primeiro valor: ");
-    double v1 = Convert.ToDouble(Console.ReadLine());
-
+    double v1 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.ESoma);
 
     Console.WriteLine("Segundo valor: ");
-    double v2 = Convert.ToDouble(Console.ReadLine());
+    double v2 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.ESoma);
 
     double resultado = v1 + v2;
     Console.WriteLine(" ");
@@ -44,12 +44,12 @@ static void Soma() {
 
 static void Subtracao() {
     Console.Clear();
-    Console.WriteLine("Primeiro valor: ");
-    double v1 = Convert.ToDouble(Console.ReadLine());
 
+    Console.WriteLine("Primeiro valor: ");
+    double v1 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.ESubtracao);
 
     Console.WriteLine("Segundo valor: ");
-    double v2 = Convert.ToDouble(Console.ReadLine());
+    double v2 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.ESubtracao);
 
     double resultado = v1 - v2;
     Console.WriteLine(" ");
@@ -61,11 +61,10 @@ static void Subtracao() {
 static void Divisao() {
     Console.Clear();
     Console.WriteLine("Primeiro valor: ");
-    double v1 = Convert.ToDouble(Console.ReadLine());
-
+    double v1 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.EDivisao);
 
     Console.WriteLine("Segundo valor: ");
-    double v2 = Convert.ToDouble(Console.ReadLine());
+    double v2 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.EDivisao);
 
     double resultado = v1 / v2;
     Console.WriteLine(" ");
@@ -77,15 +76,41 @@ static void Divisao() {
 static void Multiplicacao() {
     Console.Clear();
     Console.WriteLine("Primeiro valor: ");
-    double v1 = Convert.ToDouble(Console.ReadLine());
-
+    double v1 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.EMultiplicacao);
 
     Console.WriteLine("Segundo valor: ");
-    double v2 = Convert.ToDouble(Console.ReadLine());
+    double v2 = ValidarEntradaNumerica(Console.ReadLine(), Operadores.EMultiplicacao);
 
     double resultado = v1 * v2;
     Console.WriteLine(" ");
     Console.WriteLine($"Resultado da multiplicação é: {resultado}");
     Console.ReadKey();
     Menu();
+}
+
+static double ValidarEntradaNumerica(string? valor, Operadores origem){
+    double valorResultado;
+    if (!double.TryParse(valor, out valorResultado)){
+
+        switch(origem) {
+            case Operadores.ESoma: 
+                Soma(); break;
+            case Operadores.ESubtracao: 
+                Subtracao(); break;
+            case Operadores.EDivisao: 
+                Divisao(); break;
+            case Operadores.EMultiplicacao: 
+                Multiplicacao(); break;
+            default: Menu(); break;
+        }
+
+    }    
+    return valorResultado;
+}
+
+enum Operadores{
+    ESoma=1,
+    ESubtracao=2,
+    EMultiplicacao=3,
+    EDivisao=4
 }
